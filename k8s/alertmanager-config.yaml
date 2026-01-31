@@ -1,0 +1,26 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: bot-alert-router
+  namespace: default
+  labels:
+    release: prometheus
+spec:
+  route:
+    groupBy: ['alertname']
+    groupWait: 10s
+    groupInterval: 1m
+    repeatInterval: 1h
+    receiver: 'healer-bot-webhook'
+    routes:
+    # Route only specific alerts to the bot
+    - matchers:
+      - name: alertname
+        value: MemoryLeakDetected
+      receiver: 'healer-bot-webhook'
+  receivers:
+  - name: 'healer-bot-webhook'
+    webhookConfigs:
+    # Internal DNS name of the Healer Bot Service
+    - url: 'http://healer-bot.default.svc:80/webhook'
+      sendResolved: true
