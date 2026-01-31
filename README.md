@@ -25,6 +25,18 @@ graph LR
     E -->|Restart Pod| A
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 Core Components
 Metric Ingestion: Prometheus scrapes container_memory_usage_bytes and other signals in real-time.
 
