@@ -101,7 +101,7 @@ Plaintext
 INFO:HealerBot: 📩 Received Alert Payload: 1 alerts
 INFO:HealerBot: 🚨 TARGET IDENTIFIED: Pod 'bad-app-7f8d9c' in 'default'
 INFO:HealerBot: 💉 HEALED: Pod 'bad-app-7f8d9c' was successfully deleted.
-📊 Business Impact 
+📊 Business Impact & NIW Context
 This project demonstrates advanced Site Reliability Engineering (SRE) principles essential for maintaining critical US digital infrastructure:
 
 Operational Efficiency: Eliminates "Toil" by automating repetitive troubleshooting tasks, allowing engineers to focus on architecture.
