@@ -5,16 +5,18 @@
 ![Python](https://img.shields.io/badge/python-3.9-yellow)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
-**An event-driven self-healing framework for Kubernetes clusters that eliminates manual intervention for common infrastructure failures.**
+**An event-driven self-healing framework for Kubernetes clusters designed to eliminate manual intervention for common infrastructure failures.**
+
+---
 
 ## 📖 Executive Summary
-In high-scale production environments, "Mean Time to Recovery" (MTTR) is a critical KPI. Manual troubleshooting of memory leaks or stuck processes can take minutes or hours. 
+In high-scale production environments, **Mean Time to Recovery (MTTR)** is a critical KPI. Relying on human engineers to manually restart services during memory leaks or deadlocks introduces latency and potential for error.
 
-This project implements a **Level-4 Autonomous System** (Self-Healing) that detects anomalies via Prometheus metrics and executes automated remediation strategies via a custom Kubernetes Operator logic.
+This project implements a **Level-4 Autonomous System** (Self-Healing) that detects anomalies via Prometheus metrics and executes automated remediation strategies via a custom Kubernetes Operator logic. It bridges the gap between **Observability** and **Action**.
 
 ## 🏗️ Architecture Design
 
-The system operates on a closed-loop feedback mechanism:
+The system operates on a closed-loop feedback mechanism, ensuring zero-touch recovery.
 
 ```mermaid
 graph LR
@@ -22,21 +24,8 @@ graph LR
     B -->|Alert: HighMemory| C{Alertmanager}
     C -->|Webhook Payload| D[Healer Bot Controller]
     D -->|K8s API Call| E((Kubernetes Control Plane))
-    E -->|Restart Pod| A
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    E -->|Restart/Patch Pod| A
+    style D fill:#f9f,stroke:#333,stroke-width:2px
 Core Components
 Metric Ingestion: Prometheus scrapes container_memory_usage_bytes and other signals in real-time.
 
@@ -128,4 +117,3 @@ Audit Logging: All remediation actions are logged for compliance and post-mortem
 
 📜 License
 MIT License. Open for contribution.
-    
