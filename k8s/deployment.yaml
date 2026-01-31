@@ -1,0 +1,61 @@
+# --- BAD APP DEPLOYMENT ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bad-app
+  labels:
+    app: bad-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bad-app
+  template:
+    metadata:
+      labels:
+        app: bad-app
+    spec:
+      containers:
+      - name: bad-app
+        image: bad-app:v1
+        imagePullPolicy: Never # Use local image for K3d/Kind
+        resources:
+          limits:
+            memory: "400Mi" # Hard limit to prevent node starvation
+---
+# --- HEALER BOT DEPLOYMENT ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healer-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: healer-bot
+  template:
+    metadata:
+      labels:
+        app: healer-bot
+    spec:
+      # Attach the ServiceAccount with RBAC permissions
+      serviceAccountName: healer-bot-sa 
+      containers:
+      - name: healer-bot
+        image: healer-bot:v1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+          name: http
+---
+# --- HEALER BOT SERVICE ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: healer-bot
+spec:
+  selector:
+    app: healer-bot
+  ports:
+  - port: 80
+    targetPort: 8000
