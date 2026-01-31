@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: memory-leak-rules
+  labels:
+    release: prometheus # Must match the Prometheus Helm release label
+spec:
+  groups:
+  - name: heavy-apps
+    rules:
+    - alert: MemoryLeakDetected
+      # Trigger if memory usage exceeds 300MB
+      expr: container_memory_usage_bytes{namespace="default"} > 314572800 
+      for: 30s
+      labels:
+        severity: critical
+      annotations:
+        summary: "Pod {{ $labels.pod }} is consuming excessive memory."
+        description: "Memory usage is above 300MB. Auto-remediation will be triggered."
