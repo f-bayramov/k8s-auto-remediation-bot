@@ -28,6 +28,31 @@ graph LR
     style D fill:#f9f,stroke:#333,stroke-width:2px
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Core Components
 Metric Ingestion: Prometheus scrapes container_memory_usage_bytes and other signals in real-time.
 
